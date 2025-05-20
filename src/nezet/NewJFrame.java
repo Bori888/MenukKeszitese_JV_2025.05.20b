@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import modell.Konfiguracio;
 
 public class NewJFrame extends javax.swing.JFrame {
 
@@ -218,21 +219,18 @@ public class NewJFrame extends javax.swing.JFrame {
         if (gomb == JFileChooser.APPROVE_OPTION) {
             File kivalasztottFajl = jfc.getSelectedFile();
             try {
-                String adatok = Files.readString(kivalasztottFajl.toPath());
+                String egySor = Files.readString(kivalasztottFajl.toPath());
                 System.out.println("A beolvasott fájl tartalma: ");
-                System.out.println(adatok);
+                System.out.println(egySor);
                 
-                /* sorok feldolgozása */
-                String[] sorok = adatok.split("\n");
-                String nev = sorok[0].substring(sorok[0].indexOf(" ")+1);
-                String strSzam = sorok[1].substring(sorok[1].indexOf("(")+1, sorok[1].length()-1);
-                int index = Integer.parseInt(strSzam);
-                String strChb = sorok[2].split(" ")[1];
-                boolean chb = strChb.startsWith("nem")?false:true;
-                
-                txtNev.setText(nev);
-                cmbSzak.setSelectedIndex(index);
-                chbHirlevel.setSelected(chb);
+                //modell létrehozasa
+                //Konfiguracio modell =new Konfiguracio(nev,index,chb);
+                Konfiguracio modell =new Konfiguracio(egySor);
+                        
+                //modell felhasznalasa
+                txtNev.setText(modell.getNev());
+                cmbSzak.setSelectedIndex(modell.getIndex());
+                chbHirlevel.setSelected(modell.isHirlevel());
             } catch (IOException ex) {
                 Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
