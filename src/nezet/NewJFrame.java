@@ -12,9 +12,12 @@ import javax.swing.JOptionPane;
 import modell.Konfiguracio;
 
 public class NewJFrame extends javax.swing.JFrame {
+    
+    private Konfiguracio modell;
 
     public NewJFrame() {
         initComponents();
+        
     }
 
     /**
@@ -40,7 +43,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mnuPrgKilepes = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        rbmModellKiiras = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -136,9 +139,14 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jMenu4.setText("Program");
 
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
-        jMenu4.add(jRadioButtonMenuItem1);
+        rbmModellKiiras.setSelected(true);
+        rbmModellKiiras.setText("modell kiírása");
+        rbmModellKiiras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbmModellKiirasActionPerformed(evt);
+            }
+        });
+        jMenu4.add(rbmModellKiiras);
 
         jMenuBar1.add(jMenu4);
 
@@ -224,8 +232,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 System.out.println(egySor);
                 
                 //modell létrehozasa
-                //Konfiguracio modell =new Konfiguracio(nev,index,chb);
-                Konfiguracio modell =new Konfiguracio(egySor);
+                modell =new Konfiguracio(egySor);
+                
                         
                 //modell felhasznalasa
                 txtNev.setText(modell.getNev());
@@ -242,6 +250,19 @@ public class NewJFrame extends javax.swing.JFrame {
         cmbSzak.setSelectedIndex(0);
         chbHirlevel.setSelected(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void rbmModellKiirasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbmModellKiirasActionPerformed
+        System.out.println(modell.getNev());
+        
+        String msg = "név: " + modell.getNev()
+                +"\nszak: %s(%d)".formatted(modell.getIndex(), cmbSzak.getSelectedIndex())
+                +"\nhírlevél: " + (modell.isHirlevel()?"kér":"nem kér");
+        try {
+            Files.writeString(Path.of("BeszedesModel.txt"),msg);
+        } catch (IOException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_rbmModellKiirasActionPerformed
 
     private String tartalom(){
         String nev = txtNev.getText();
@@ -312,11 +333,11 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem mnuPrgBetoltes;
     private javax.swing.JMenuItem mnuPrgKilepes;
     private javax.swing.JMenuItem mnuPrgMentes;
+    private javax.swing.JRadioButtonMenuItem rbmModellKiiras;
     private javax.swing.JTextField txtNev;
     // End of variables declaration//GEN-END:variables
 }
