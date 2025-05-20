@@ -1,3 +1,0 @@
-név: aaa
-szak: --== Kiválasztott szak ==--(0)
-hírlevél: kér
