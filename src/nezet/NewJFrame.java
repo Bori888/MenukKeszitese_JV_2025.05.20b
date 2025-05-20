@@ -60,6 +60,11 @@ public class NewJFrame extends javax.swing.JFrame {
         chbHirlevel.setText("hírlevél");
 
         jButton1.setText("Reset");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -234,15 +239,23 @@ public class NewJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuPrgBetoltesActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        txtNev.setText(" ");
+        cmbSzak.setSelectedIndex(0);
+        chbHirlevel.setSelected(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private String tartalom(){
         String nev = txtNev.getText();
         //String szak = cmbSzak.getSelectedItem().toString();
-        String szak = (String)cmbSzak.getSelectedItem();
+        int index = cmbSzak.getSelectedIndex();
         boolean hirlevel = chbHirlevel.isSelected();
-        String msg = "név: " + nev
-                +"\nszak: %s(%d)".formatted(szak, cmbSzak.getSelectedIndex())
-                +"\nhírlevél: " + (hirlevel?"kér":"nem kér");
-        return msg;
+        final String SEP = " ";
+        return nev+SEP+index+SEP+hirlevel;
+//        String msg = "név: " + nev
+//                +"\nszak: %s(%d)".formatted(szak, cmbSzak.getSelectedIndex())
+//                +"\nhírlevél: " + (hirlevel?"kér":"nem kér");
+//        return msg;
     }
     private void kilepes() throws HeadlessException {
         String msg = "Biztos kilépsz?";
